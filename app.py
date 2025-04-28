@@ -23,7 +23,7 @@ def load_users():
         return {}
 
 # Load tasks from tasks.json
-def load_tasks():
+def get_tasks():
     try:
         with open("tasks.json", "r") as file:
             return json.load(file)
@@ -41,6 +41,6 @@ async def get_user(username: str):
 
 # Get all available tasks
 @app.get("/tasks")
-async def get_tasks():
-    tasks = load_tasks()
+async def tasks():
+    tasks = get_tasks()
     return tasks
