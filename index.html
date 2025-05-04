@@ -121,7 +121,7 @@ button.link-btn {
       <p>Zyper Points: <span id="points">0</span> </p>
       <p>Referrals:<span id="referrals">0</span> </p>
     </div>
-    <button class="link-btn" onclick="switchTab('task')">Start Task</button>
+    <button class="link-btn" onclick="switchTab('task-list')">Start Task</button>
     <button class="link-btn" onclick="switchTab('mint')">Mint NFT</button>
     <button class="link-btn" onclick="switchTab('defi')">DeFi</button>
     <button class="link-btn" onclick="window.open('https://zyper.org')">Visit Website</button>
@@ -170,7 +170,7 @@ button.link-btn {
       <div class="nft-preview">
         <img src="images/dd.jpg" style="width: 100%; height: 200px;">
       </div>
-      <button class="link-btn" onclick="window.open()">Mint NFT (5 TON)</button>
+      <button class="link-btn" onclick="window.open('ton://transfer/UQCySGvIswTSBOmO5U4ufFVjEi65a63j0PTo2qoPN_yJiF5M?amount=5000000000')">Mint NFT (5 TON)</button>
     </div>
 </div>  <div id="defi" class="main">
   <div class="defi">
@@ -187,7 +187,7 @@ button.link-btn {
     <i data-lucide="home"></i>
     Home
   </button>
-  <button onclick="switchTab('task')">
+  <button onclick="switchTab('task-list')">
     <i data-lucide="list-check"></i>
     Task
   </button>
