@@ -31,7 +31,7 @@
   display: block;
 }
 
-.stats, .tasks, .mint, .defi {
+.stats, .tasks, .buy, .defi {
   background: #f0f8ff;
   padding: 1rem;
   border-radius: 10px;
@@ -122,7 +122,7 @@ button.link-btn {
       <p>Referrals:<span id="referrals">0</span> </p>
     </div>
     <button class="link-btn" onclick="switchTab('task-list')">Start Task</button>
-    <button class="link-btn" onclick="switchTab('mint')">Mint NFT</button>
+    <button class="link-btn" onclick="switchTab('buy')">Buy NFT</button>
     <button class="link-btn" onclick="switchTab('defi')">DeFi</button>
     <button class="link-btn" onclick="window.open('https://zyper.org')">Visit Website</button>
   </div>  
@@ -132,45 +132,45 @@ button.link-btn {
       <div class="task-card">
         <div>
           <p>✅ Daily Check-in</p>
-          <button>Check-in</button>
+          <button onclick="completeTask('checkin')">Check-in</button>
         </div>
         <span>+5 pts</span>
       </div>
       <div class="task-card">
         <div>
-          <p>Join Telegram Group</p>
-          <button onclick="window.open('https://t.me/yourgroup')">Join</button>
+          <p>Join Our Telegram Group</p>
+          <button onclick="completeTask('JoinTelegram');window.open('https://https://t.me/+Td6YPMh83g03ZWI1')">Join</button>
         </div>
         <span>+10 pts</span>
       </div>
       <div class="task-card">
         <div>
           <p>Follow us on X</p>
-          <button onclick="window.open('https://x.com/youraccount')">Follow</button>
+          <button onclick="completeTask('followX');window.open('https://x.com/zyper_officialX')">Follow</button>
         </div>
         <span>+8 pts</span>
       </div>
       <div class="task-card">
         <div>
-          <p>Invite 5 friends</p>
-          <button>Invite Now</button>
+          <p>Join Discord Channel</p>
+          <button onclick="completeTask('joinDiscord');window.open('https://discord.com')">Join</button>
         </div>
-        <span>+20 pts</span>
+        <span>+10 pts</span>
       </div>
       <div class="task-card">
         <div>
-          <p>Mint an NFT</p>
-          <button onclick="window.open('ton://transfer?amount=20000000&text=Mint+Zyper+NFT')">Mint NFT</button>
+          <p>Buy NFT</p>
+          <button onclick="completeTask('buyNFT');window.open('https://t.me/GetgemsNftBot/gems?startapp=collection-addr_EQDY93c0ImQd2QV3iIa5BRZVAUJe9_-RxCcWAz3vbzRqb_8D')">Buy NFT</button>
         </div>
         <span>+15 pts</span>
       </div>
     </div>
-  </div>  <div id="mint" class="main">
-    <div class="mint">
+  </div>  <div id="buy" class="main">
+    <div class="buy">
       <div class="nft-preview">
         <img src="images/dd.jpg" style="width: 100%; height: 200px;">
       </div>
-      <button class="link-btn" onclick="window.open('ton://transfer/UQCySGvIswTSBOmO5U4ufFVjEi65a63j0PTo2qoPN_yJiF5M?amount=5000000000')">Mint NFT (5 TON)</button>
+      <button class="link-btn" onclick="window.open('https://t.me/GetgemsNftBot/gems?startapp=collection-addr_EQDY93c0ImQd2QV3iIa5BRZVAUJe9_-RxCcWAz3vbzRqb_8D')">Buy NFT</button>
     </div>
 </div>  <div id="defi" class="main">
   <div class="defi">
@@ -191,17 +191,16 @@ button.link-btn {
     <i data-lucide="list-check"></i>
     Task
   </button>
-  <button onclick="switchTab('mint')">
+  <button onclick="switchTab('buy')">
     <i data-lucide="image"></i>
-    Mint
+    Buy
   </button>
   <button onclick="switchTab('defi')">
     <i data-lucide="wallet"></i>
     DeFi
   </button>
 </div>  <script>
-  lucide.createIcons();
-
+    lucide.createIcons();
   function switchTab(tab) {
     document.querySelectorAll('.main').forEach(div => div.classList.remove('active'));
     document.getElementById(tab).classList.add('active');
@@ -215,6 +214,38 @@ button.link-btn {
   };
 
   document.getElementById('username').innerText = "Username: @" + user.username;
+
+  //define tasks
+  <!--
+    const tasks = [
+    {id: "checkin", points:5},
+    {id: "joinTelegram", points:10},
+    {id: "followX", points:10},
+    {id: "joinDiscord", points:10},
+    {id: "buyNFT", points:15}
+  ];
+
+  //load progress from localstorage
+  let userProgress = 
+  JSON.parse(localStorage.getItem("zyperProgress")) || {
+    points:0,
+    completed:{}
+  };
+
+  function saveProgress() {
+
+    localStorage.setItem("zyperProgress", JSON.stringify(userProgress));
+
+    document.getElementById("points").innerText = userProgress.points;
+  }
+  document.addEventListener("DOMContentLoaded", function() {
+    lucide.createIcons();
+  });
+  saveProgress();
+    -->
+  
+
+  
 </script>
 </body>
 </html>
