@@ -4,6 +4,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Zyper Mini App</title>
   <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
@@ -208,10 +209,18 @@ button.link-btn {
     event.target.closest('button').classList.add('active');
   }
 
-  // Mock Telegram User (replace with real data from WebApp)
-  const user = {
-    username: "zyper_gamer"
-  };
+  // fetch user data
+  document.addEventListener("DOMContentLoaded", function() {
+    const tg = window.Telegram.WebApp;
+    tg.ready();
+
+    const user = {
+      username:
+      tg.initDataUnsafe?.username ||
+      "unknown",
+      id:tg.initDataUnsafe?.user?.id || "N/A"
+    };
+  })
 
   document.getElementById('username').innerText = "Username: @" + user.username;
 
