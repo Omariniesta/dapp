@@ -213,24 +213,29 @@ button.link-btn {
   }
 
   // fetch user data
+
   document.addEventListener("DOMContentLoaded", function() {
     const tg = window.Telegram.WebApp;
-    tg.ready();
+    tg.ready(); 
 
-    const user = {
-      username:
-      tg.initDataUnsafe?.username ||
-      "unknown",
-      id:tg.initDataUnsafe?.user?.id || "N/A"
-    };
+    console.log("Init Data:", 
+      tg.initDataUnsafe);
 
-    document.getElementById('username').innerText = "Username: @" + user.username;
+      if (tg.initDataUnsafe?.user) {
+        const user = 
+        tg.initDataUnsafe.user;
+
+        document.getElementById("username").innerText = "Username @" + 
+        (user.username || "unknown");
+      } else {
+        console.log("user not found ")
+      }
   });
 
   let walletAddress = null;
 
   function connectWallet() {
-    const tonconnect = new
+    const tonConnect = new
     TonConnect();
 
     tonConnect.connect()
