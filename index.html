@@ -223,7 +223,9 @@ button.link-btn {
       "unknown",
       id:tg.initDataUnsafe?.user?.id || "N/A"
     };
-  })
+
+    document.getElementById('username').innerText = "Username: @" + user.username;
+  });
 
   let walletAddress = null;
 
@@ -241,9 +243,9 @@ button.link-btn {
 
       document.getElementById('walletBalance').innerText = "100 TON"
     })
-    .catch(err =>
+    .catch(err => {
       console.error("wallet connection failed", err)
-    );
+  });
   }
 
   document.getElementById('username').innerText = "Username: @" + user.username;
