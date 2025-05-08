@@ -5,6 +5,7 @@
   <title>Zyper Mini App</title>
   <script src="https://unpkg.com/lucide@latest"></script>
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tonconnect/sdk@latest/dist/tonconnect.min.js"></script>
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
@@ -175,8 +176,9 @@ button.link-btn {
     </div>
 </div>  <div id="defi" class="main">
   <div class="defi">
-    <button class="link-btn">Connect Wallet</button>
-    <p>Wallet Balance: 0.00 TON</p>
+    <button class="link-btn" onclick="connectWallet()">Connect Wallet</button>
+    <p>Wallet Address: <span id="walletAddress">Not connected</span></p>
+    <p>Wallet Balance:<span id="walletBalance"> 0.00 TON</span></p>
     <div class="staking" style="margin-top:1rem; background:#fff; padding:1rem; border-radius:10px;">
       <h4>NFT Staking</h4>
       <p>Stake your NFT to earn passive rewards.</p>
@@ -200,7 +202,8 @@ button.link-btn {
     <i data-lucide="wallet"></i>
     DeFi
   </button>
-</div>  <script>
+</div> 
+ <script>
     lucide.createIcons();
   function switchTab(tab) {
     document.querySelectorAll('.main').forEach(div => div.classList.remove('active'));
@@ -221,6 +224,27 @@ button.link-btn {
       id:tg.initDataUnsafe?.user?.id || "N/A"
     };
   })
+
+  let walletAddress = null;
+
+  function connectWallet() {
+    const tonconnect = new
+    TonConnect();
+
+    tonConnect.connect()
+    .then(provider => {
+      walletAddress = provider.wallet.address;
+
+      document.getElementById('walletAddress').innerText = walletAddress;
+
+      //dummy balance (replace with actual API call to fetch balance)
+
+      document.getElementById('walletBalance').innerText = "100 TON"
+    })
+    .catch(err =>
+      console.error("wallet connection failed", err)
+    );
+  }
 
   document.getElementById('username').innerText = "Username: @" + user.username;
 
