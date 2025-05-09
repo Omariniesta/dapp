@@ -237,7 +237,7 @@ button.link-btn {
   document.addEventListener("DOMContentLoaded", function() {
     tonConnect = new TonConnect({
       manifestUrl:
-      "https://github.com/Omariniesta/dapp/blob/main/tonconnect-manifest.json"
+      "https://raw.githubusercontent.com/Omariniesta/dapp/blob/main/tonconnect-manifest.json"
     });
   });
 
@@ -245,9 +245,9 @@ button.link-btn {
     try {
       const connectedWallets = await
       tonConnect.connectWallet();
-      if (connectedWallets.length > 0)
-    {
-      const walletAddress = connectedWallets[0].address;
+
+      if (connectedWallets.length > 0) {
+      const walletAddress = connectedWallets[0].account.address;
 
       document.getElementById('walletAddress').innerText = walletAddress;
 
@@ -256,7 +256,7 @@ button.link-btn {
       document.getElementById('walletBalance').innerText = "100 TON";
     }
     } catch(err){
-      console.error("Wallet connection failed:", err)
+      console.error("Wallet connection failed:", err);
     }
   }
 
