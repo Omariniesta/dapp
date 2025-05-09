@@ -1,46 +1,47 @@
 from fastapi import FastAPI, HTTPException
-from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
 import json
-import os
 
 app = FastAPI()
 
-# CORS Setup: allows frontend (even from another port) to access the backend
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],  # You can replace "*" with your frontend domain for security
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+class TaskUpdate(BaseModel):
+    task_id: int
+    username: str
 
-# Load users from users.json
-def load_users():
-    try:
-        with open("users.json", "r") as file:
-            return json.load(file)
-    except FileNotFoundError:
-        return {}
-
-# Load tasks from tasks.json
-def get_tasks():
-    try:
-        with open("tasks.json", "r") as file:
-            return json.load(file)
-    except FileNotFoundError:
-        return []
-
-# Get data for a specific user
-@app.get("/user/{username}")
-async def get_user(username: str):
-    users = load_users()
-    if username in users:
-        return users[username]
-    else:
-        raise HTTPException(status_code=404, detail="User not found")
-
-# Get all available tasks
 @app.get("/tasks")
-async def tasks():
-    tasks = get_tasks()
-    return tasks
+def get_tasks():
+    with open("tasks.json", "r") as file:
+        tasks = json.load(file)
+    return {"tasks": tasks}
+
+@app.post("/complete_task")
+def complete_task(task_update: TaskUpdate):
+    with open("tasks.json", "r") as file:
+        tasks = json.load(file)
+
+    task_found = next((task for task in tasks if task["id"] == task_update.task_id), None)
+    
+    if not task_found:
+        raise HTTPException(status_code=404, detail="Task not found")
+
+    # Update the task status
+    task_found["status"] = "complete"
+
+    # Save updated tasks
+    with open("tasks.json", "w") as file:
+        json.dump(tasks, file)
+
+    # Update user points
+    with open("users.json", "r") as file:
+        users = json.load(file)
+
+    user = next((u for u in users if u["username"] == task_update.username), None)
+    
+    if user:
+        user["points"] += task_found["points"]
+
+    # Save updated user data
+    with open("users.json", "w") as file:
+        json.dump(users, file)
+
+    return {"message": "Task completed", "points_awarded": task_found["points"]}
