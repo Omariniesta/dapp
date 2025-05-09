@@ -242,23 +242,23 @@ button.link-btn {
   });
 
   async function connectWallet() {
-    try {
-      const connectedWallets = await
-      tonConnect.connectWallet();
+  try {
+    console.log("Attempting to connect to the wallet...");
 
-      if (connectedWallets.length > 0) {
-      const walletAddress = connectedWallets[0].account.address;
+    const wallets = await tonConnect.connect();
+    console.log("Wallets connected:", wallets);
 
+    if (wallets && wallets.length > 0) {
+      const walletAddress = wallets[0].account.address;
       document.getElementById('walletAddress').innerText = walletAddress;
-
-      //dummy balance for now
-
-      document.getElementById('walletBalance').innerText = "100 TON";
+      document.getElementById('walletBalance').innerText = "100 TON"; // Dummy balance
+    } else {
+      console.log("No wallet connected.");
     }
-    } catch(err){
-      console.error("Wallet connection failed:", err);
-    }
+  } catch (err) {
+    console.error("Wallet connection failed:", err);
   }
+}
 
   document.getElementById('username').innerText = "Username: @" + user.username;
 
