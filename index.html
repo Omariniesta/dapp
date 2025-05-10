@@ -250,15 +250,33 @@ button.link-btn {
 
     if (wallets && wallets.length > 0) {
       const walletAddress = wallets[0].account.address;
+      console.log("Wallet Address:", walletAddress);
+
+      //Display the wallet address
+
       document.getElementById('walletAddress').innerText = walletAddress;
-      document.getElementById('walletBalance').innerText = "100 TON"; // Dummy balance
-    } else {
-      console.log("No wallet connected.");
-    }
-  } catch (err) {
-    console.error("Wallet connection failed:", err);
-  }
-}
+      
+      //fetch wallet balance
+
+      const balanceResponse = await
+      fetch('https://toncenter.com/api/v2/getAddressBalance?address=${walletAddress}');
+      const balanceData = await balanceResponse.json();
+
+      console.log("Balance data:", balanceData);
+
+      if (balanceData.result) {
+        const balanceTON = balanceData.result/ 1e9;
+
+        document.getElementById('walletBalance').innerText = '$ 
+        {balanceTON.toFixed(2)} TON';
+       } else {
+
+        document.getElementById('walletBalance').innerText = "0.00 TON";
+       } else {
+        console.log("No wallet connected.");
+       } catch (err) {
+        console.error("Wallet connection failed:,");
+       }
 
   document.getElementById('username').innerText = "Username: @" + user.username;
 
