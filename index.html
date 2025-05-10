@@ -185,7 +185,8 @@ button.link-btn {
       <button class="link-btn">Stake Now</button>
     </div>
   </div>
-</div>  <div class="footer nav">
+</div> 
+ <div class="footer nav">
   <button class="active" onclick="switchTab('home')">
     <i data-lucide="home"></i>
     Home
@@ -204,13 +205,32 @@ button.link-btn {
   </button>
 </div> 
  <script>
-    lucide.createIcons();
-  function switchTab(tab) {
+ lucide.createIcons();
+
+  function switchTab(tab, event) {
     document.querySelectorAll('.main').forEach(div => div.classList.remove('active'));
     document.getElementById(tab).classList.add('active');
     document.querySelectorAll('.footer button').forEach(btn => btn.classList.remove('active'));
-    event.target.closest('button').classList.add('active');
+
+    //ensure event exist
+    if (event && event.target) {
+      const targetButton = event.target.closest('button');
+      if (targetButton) {
+
+        targetButton.classList.add('active');
+      }
+    }
   }
+  //attach click event to buttons
+
+  document.querySelectorAll('.footer button').forEach(button => {
+
+    button.addEventListener('click', function (event) {
+      const tab = 
+      this.getAttribute('onclick').split("'")[1];
+      switchTab(tab, event);
+    });
+  });
 
   // fetch user data
 
@@ -231,52 +251,6 @@ button.link-btn {
         console.log("user not found ")
       }
   });
-
-  let tonConnect;
-
-  document.addEventListener("DOMContentLoaded", function() {
-    tonConnect = new TonConnect({
-      manifestUrl:
-      "https://raw.githubusercontent.com/Omariniesta/dapp/blob/main/tonconnect-manifest.json"
-    });
-  });
-
-  async function connectWallet() {
-  try {
-    console.log("Attempting to connect to the wallet...");
-
-    const wallets = await tonConnect.connect();
-    console.log("Wallets connected:", wallets);
-
-    if (wallets && wallets.length > 0) {
-      const walletAddress = wallets[0].account.address;
-      console.log("Wallet Address:", walletAddress);
-
-      //Display the wallet address
-
-      document.getElementById('walletAddress').innerText = walletAddress;
-      
-      //fetch wallet balance
-
-      const balanceResponse = await
-      fetch('https://toncenter.com/api/v2/getAddressBalance?address=${walletAddress}');
-      const balanceData = await balanceResponse.json();
-
-      console.log("Balance data:", balanceData);
-
-      if (balanceData.result) {
-        const balanceTON = balanceData.result/ 1e9;
-
-        document.getElementById('walletBalance').innerText = '$ 
-        {balanceTON.toFixed(2)} TON';
-       } else {
-
-        document.getElementById('walletBalance').innerText = "0.00 TON";
-       } else {
-        console.log("No wallet connected.");
-       } catch (err) {
-        console.error("Wallet connection failed:,");
-       }
 
   document.getElementById('username').innerText = "Username: @" + user.username;
 
