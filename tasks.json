@@ -1,0 +1,37 @@
+[
+  {
+    "id": "checkin",
+    "title": "Daily Check-in",
+    "description": "Earn points by checking in daily.",
+    "points": 5,
+    "action": "checkin"
+  },
+  {
+    "id": "joinTelegram",
+    "title": "Join Telegram Group",
+    "description": "Join our official Telegram group and stay updated.",
+    "points": 10,
+    "action": "https://t.me/+Td6YPMh83g03ZWI1"
+  },
+  {
+    "id": "followX",
+    "title": "Follow Us on X",
+    "description": "Follow our official X account.",
+    "points": 8,
+    "action": "https://x.com/zyper_officialX"
+  },
+  {
+    "id": "joinDiscord",
+    "title": "Join Discord Channel",
+    "description": "Be part of our Discord community.",
+    "points": 10,
+    "action": "https://discord.com"
+  },
+  {
+    "id": "buyNFT",
+    "title": "Buy NFT",
+    "description": "Purchase an NFT to earn extra points.",
+    "points": 15,
+    "action": "https://t.me/GetgemsNftBot/gems?startapp=collection-addr_EQDY93c0ImQd2QV3iIa5BRZVAUJe9_-RxCcWAz3vbzRqb_8D"
+  }
+]
