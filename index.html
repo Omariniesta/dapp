@@ -1,290 +1,92 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Zyper Mini App</title>
+
+  <!-- External Libraries -->
+  <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@tonconnect/sdk@latest/dist/tonconnect.min.js"></script>
-  <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      margin: 0;
-      background-color: #ffffff;
-      color: #000000;
-      display: flex;
-      flex-direction: column;
-      height: 100vh;
-    }.header, .footer {
-  background-color: #0088cc;
-  color: white;
-  padding: 1rem;
-  text-align: center;
-}
 
-.main {
-  flex: 1;
-  overflow-y: auto;
-  padding: 1rem;
-  display: none;
-}
-
-.main.active {
-  display: block;
-}
-
-.stats, .tasks, .buy, .defi {
-  background: #f0f8ff;
-  padding: 1rem;
-  border-radius: 10px;
-  margin-bottom: 1rem;
-}
-
-.task-card {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: #fff;
-  padding: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  margin-bottom: 1rem;
-}
-
-.task-card button {
-  margin-top: 0.5rem;
-  background: #0088cc;
-  color: white;
-  padding: 0.5rem;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-button.link-btn {
-  width: 50%;
-  padding: 0.8rem;
-  margin: 0.5rem auto;
-  display: block;
-  background: #0088cc;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.nft-preview {
-  height: 200px;
-  background: #e6f2ff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 1rem;
-  border: 1px dashed #0088cc;
-}
-
-.nav {
-  display: flex;
-  justify-content: space-around;
-  background-color: #0088cc;
-}
-
-.nav button {
-  flex: 1;
-  padding: 0.5rem;
-  background: none;
-  border: none;
-  color: white;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  font-size: 0.9rem;
-}
-
-.nav button.active {
-  color: #000;
-  font-weight: bold;
-  background: #e6f2ff;
-}
-
-.nav svg {
-  width: 20px;
-  height: 20px;
-}
-
-  </style>
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <div class="header">Zyper</div>  <div id="home" class="main active">
+
+  <div class="header">Zyper</div>
+
+  <!-- Home Section -->
+  <div id="home" class="main active">
     <div class="stats">
       <h3>User Stats</h3>
       <p id="username">Username: @loading...</p>
-      <p>Zyper Points: <span id="points">0</span> </p>
-      <p>Referrals:<span id="referrals">0</span> </p>
+      <p>Zyper Points: <span id="points">0</span></p>
+      <p>Referrals: <span id="referrals">0</span></p>
     </div>
-    <button class="link-btn" onclick="switchTab('task-list')">Start Task</button>
-    <button class="link-btn" onclick="switchTab('buy')">Buy NFT</button>
-    <button class="link-btn" onclick="switchTab('defi')">DeFi</button>
+    <button class="link-btn" data-tab="task-list">Start Task</button>
+    <button class="link-btn" data-tab="buy">Buy NFT</button>
+    <button class="link-btn" data-tab="defi">DeFi</button>
     <button class="link-btn" onclick="window.open('https://zyper.org')">Visit Website</button>
-  </div>  
+  </div>
+
+  <!-- Task List Section -->
   <div id="task-list" class="main">
-    <div class="tasks">
-      <h3>Complete Tasks</h3>
-      <div class="task-card">
-        <div>
-          <p>✅ Daily Check-in</p>
-          <button onclick="completeTask('checkin')">Check-in</button>
-        </div>
-        <span>+5 pts</span>
-      </div>
-      <div class="task-card">
-        <div>
-          <p>Join Our Telegram Group</p>
-          <button onclick="completeTask('JoinTelegram');window.open('https://https://t.me/+Td6YPMh83g03ZWI1')">Join</button>
-        </div>
-        <span>+10 pts</span>
-      </div>
-      <div class="task-card">
-        <div>
-          <p>Follow us on X</p>
-          <button onclick="completeTask('followX');window.open('https://x.com/zyper_officialX')">Follow</button>
-        </div>
-        <span>+8 pts</span>
-      </div>
-      <div class="task-card">
-        <div>
-          <p>Join Discord Channel</p>
-          <button onclick="completeTask('joinDiscord');window.open('https://discord.com')">Join</button>
-        </div>
-        <span>+10 pts</span>
-      </div>
-      <div class="task-card">
-        <div>
-          <p>Buy NFT</p>
-          <button onclick="completeTask('buyNFT');window.open('https://t.me/GetgemsNftBot/gems?startapp=collection-addr_EQDY93c0ImQd2QV3iIa5BRZVAUJe9_-RxCcWAz3vbzRqb_8D')">Buy NFT</button>
-        </div>
-        <span>+15 pts</span>
-      </div>
-    </div>
-  </div>  <div id="buy" class="main">
+    <h3>Complete Tasks</h3>
+    <div id="task-container" class="task-list"></div>
+  </div>
+
+  <!-- Buy Section -->
+  <div id="buy" class="main">
     <div class="buy">
       <div class="nft-preview">
         <img src="images/dd.jpg" style="width: 100%; height: 200px;">
       </div>
       <button class="link-btn" onclick="window.open('https://t.me/GetgemsNftBot/gems?startapp=collection-addr_EQDY93c0ImQd2QV3iIa5BRZVAUJe9_-RxCcWAz3vbzRqb_8D')">Buy NFT</button>
     </div>
-</div>  <div id="defi" class="main">
-  <div class="defi">
-    <button class="link-btn" onclick="connectWallet()">Connect Wallet</button>
+  </div>
+
+  <!-- DeFi Section -->
+  <div id="defi" class="main">
+    <div id="ton-connect-btn" class="link-btn">Connect Wallet</div>
     <p>Wallet Address: <span id="walletAddress">Not connected</span></p>
-    <p>Wallet Balance:<span id="walletBalance"> 0.00 TON</span></p>
-    <div class="staking" style="margin-top:1rem; background:#fff; padding:1rem; border-radius:10px;">
-      <h4>NFT Staking</h4>
-      <p>Stake your NFT to earn passive rewards.</p>
-      <button class="link-btn">Stake Now</button>
+    <p>Wallet Balance: <span id="walletBalance">0.00 TON</span></p>
+
+    <div class="staking-section">
+      <h3>NFT Staking</h3>
+      <div class="staking-controls">
+        <input type="text" id="nftIdInput" placeholder="Enter NFT ID" class="input-field">
+        <button class="link-btn" id="stakeNFTBtn">Stake NFT</button> <!-- ✅ Fixed -->
+      </div>
+      <div class="staking-status">
+        <h4>Staked NFTs</h4>
+        <ul id="stakedNFTs"></ul>
+      </div>
     </div>
   </div>
-</div> 
- <div class="footer nav">
-  <button class="active" onclick="switchTab('home')">
-    <i data-lucide="home"></i>
-    Home
-  </button>
-  <button onclick="switchTab('task-list')">
-    <i data-lucide="list-check"></i>
-    Task
-  </button>
-  <button onclick="switchTab('buy')">
-    <i data-lucide="image"></i>
-    Buy
-  </button>
-  <button onclick="switchTab('defi')">
-    <i data-lucide="wallet"></i>
-    DeFi
-  </button>
-</div> 
- <script>
- lucide.createIcons();
 
-  function switchTab(tab, event) {
-    document.querySelectorAll('.main').forEach(div => div.classList.remove('active'));
-    document.getElementById(tab).classList.add('active');
-    document.querySelectorAll('.footer button').forEach(btn => btn.classList.remove('active'));
+  <!-- Navigation Footer -->
+  <div class="footer nav">
+    <button data-tab="home" class="active">
+      <i data-lucide="home"></i>Home
+    </button>
+    <button data-tab="task-list">
+      <i data-lucide="list-check"></i>Tasks
+    </button>
+    <button data-tab="buy">
+      <i data-lucide="image"></i>Buy
+    </button>
+    <button data-tab="defi">
+      <i data-lucide="wallet"></i>DeFi
+    </button>
+  </div>
 
-    //ensure event exist
-    if (event && event.target) {
-      const targetButton = event.target.closest('button');
-      if (targetButton) {
-
-        targetButton.classList.add('active');
-      }
-    }
-  }
-  //attach click event to buttons
-
-  document.querySelectorAll('.footer button').forEach(button => {
-
-    button.addEventListener('click', function (event) {
-      const tab = 
-      this.getAttribute('onclick').split("'")[1];
-      switchTab(tab, event);
-    });
-  });
-
-  // fetch user data
-
-  document.addEventListener("DOMContentLoaded", function() {
-    const tg = window.Telegram.WebApp;
-    tg.ready(); 
-
-    console.log("Init Data:", 
-      tg.initDataUnsafe);
-
-      if (tg.initDataUnsafe?.user) {
-        const user = 
-        tg.initDataUnsafe.user;
-
-        document.getElementById("username").innerText = "Username @" + 
-        (user.username || "unknown");
-      } else {
-        console.log("user not found ")
-      }
-  });
-
-  document.getElementById('username').innerText = "Username: @" + user.username;
-
-  //define tasks
-  <!--
-    const tasks = [
-    {id: "checkin", points:5},
-    {id: "joinTelegram", points:10},
-    {id: "followX", points:10},
-    {id: "joinDiscord", points:10},
-    {id: "buyNFT", points:15}
-  ];
-
-  //load progress from localstorage
-  let userProgress = 
-  JSON.parse(localStorage.getItem("zyperProgress")) || {
-    points:0,
-    completed:{}
-  };
-
-  function saveProgress() {
-
-    localStorage.setItem("zyperProgress", JSON.stringify(userProgress));
-
-    document.getElementById("points").innerText = userProgress.points;
-  }
-  document.addEventListener("DOMContentLoaded", function() {
-    lucide.createIcons();
-  });
-  saveProgress();
-    -->
-  
-
-  
-</script>
+  <!-- Your Scripts -->
+   <!-- Include TON Connect UI -->
+  <script src="js/data.js"></script>
+  <script src="js/tasks.js"></script>
+  <script src="js/main.js"></script> <!-- ✅ Keep this last -->
+  <script>lucide.createIcons();</script>
 </body>
 </html>

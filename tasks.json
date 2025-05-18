@@ -1,36 +1,37 @@
 [
   {
-    "id": "checkin",
-    "title": "Daily Check-in",
-    "description": "Earn points by checking in daily.",
+    "id": "dailyCheckin",
+    "title": "🔁 Daily Check-in",
+    "description": "Tap to check in and earn points every day!",
     "points": 5,
-    "action": "checkin"
+    "action": "checkin",
+    "completed": true
   },
   {
     "id": "joinTelegram",
-    "title": "Join Telegram Group",
-    "description": "Join our official Telegram group and stay updated.",
+    "title": "📢 Join Telegram",
+    "description": "Join our official Telegram group for the latest updates.",
     "points": 10,
     "action": "https://t.me/+Td6YPMh83g03ZWI1"
   },
   {
-    "id": "followX",
-    "title": "Follow Us on X",
-    "description": "Follow our official X account.",
+    "id": "followTwitter",
+    "title": "🐦 Follow on X (Twitter)",
+    "description": "Follow us on X to stay informed and earn points.",
     "points": 8,
     "action": "https://x.com/zyper_officialX"
   },
   {
     "id": "joinDiscord",
-    "title": "Join Discord Channel",
-    "description": "Be part of our Discord community.",
+    "title": "💬 Join Discord",
+    "description": "Connect with the community on our Discord channel.",
     "points": 10,
     "action": "https://discord.com"
   },
   {
     "id": "buyNFT",
-    "title": "Buy NFT",
-    "description": "Purchase an NFT to earn extra points.",
+    "title": "🎨 Buy an NFT",
+    "description": "Support the project and earn bonus points by buying an NFT.",
     "points": 15,
     "action": "https://t.me/GetgemsNftBot/gems?startapp=collection-addr_EQDY93c0ImQd2QV3iIa5BRZVAUJe9_-RxCcWAz3vbzRqb_8D"
   }
