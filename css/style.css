@@ -252,3 +252,8 @@ button.link-btn {
 .task-btn:hover {
   background-color: #2563eb;
 }
+button.completed {
+  background-color: #a0d468;
+  color: white;
+  cursor: default;
+}

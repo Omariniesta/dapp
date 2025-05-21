@@ -6,7 +6,8 @@
   <title>Zyper Mini App</title>
 
   <!-- External Libraries -->
-  <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
+   <!-- Add this line in <head> or before your main.js script -->
+  <script src="https://unpkg.com/@tonconnect/sdk@latest/dist/tonconnect-sdk.min.js"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
@@ -49,7 +50,7 @@
 
   <!-- DeFi Section -->
   <div id="defi" class="main">
-    <div id="ton-connect-btn" class="link-btn">Connect Wallet</div>
+    <button id="connectWalletBtn" class="link-btn">Connect Wallet</button>
     <p>Wallet Address: <span id="walletAddress">Not connected</span></p>
     <p>Wallet Balance: <span id="walletBalance">0.00 TON</span></p>
 
@@ -85,8 +86,8 @@
   <!-- Your Scripts -->
    <!-- Include TON Connect UI -->
   <script src="js/data.js"></script>
-  <script src="js/tasks.js"></script>
-  <script src="js/main.js"></script> <!-- ✅ Keep this last -->
-  <script>lucide.createIcons();</script>
+  <script type="module" src="js/tasks.js"></script>
+  <script type="module" src="js/main.js"></script> <!-- ✅ Keep this last -->
+<script>lucide.createIcons();</script>
 </body>
 </html>

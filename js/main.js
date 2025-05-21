@@ -1,4 +1,62 @@
 // main.js
+// Import the Firebase SDK modules
+export { db }; // if needed
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import {
+  getFirestore,
+  doc,
+  getDoc,
+  setDoc,
+  updateDoc,
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+// Your Firebase config (replace these values)
+const firebaseConfig = {
+  apiKey: "AIzaSyD9PkKSpJ2SWn5pCagyxHruRX9RTUmH_kA",
+  authDomain: "zyper-mini-app.firebaseapp.com",
+  projectId: "zyper-mini-app",
+  storageBucket: "zyper-mini-app.appspot.com",
+  messagingSenderId: "368820417143",
+  appId: "1:368820417143:web:175aab745035276fa48c72",
+};
+
+// Initialize Firebase and Firestore
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+const TonConnect = window.TonConnectSDK.TonConnect; 
+
+async function loadUserData(username) {
+  const userRef = doc(db, "users", username);
+  const userSnap = await getDoc(userRef);
+
+  if (userSnap.exists()) {
+    const userData = userSnap.data();
+    document.getElementById("points").textContent = userData.points;
+    document.getElementById("referrals").textContent = userData.referrals;
+
+    // ✅ Mark completed tasks in UI
+    (userData.completedTasks || []).forEach((taskId) => {
+      const taskEl = document.querySelector(`[data-task-id="${taskId}"]`);
+      if (taskEl) {
+        taskEl.classList.add("completed");
+        taskEl.innerHTML = "✅ Completed";
+        taskEl.disabled = true; // optional: prevent re-click
+      }
+    });
+  } else {
+    await setDoc(userRef, {
+      points: 0,
+      referrals: 0,
+      completedTasks: [],
+    });
+    document.getElementById("points").textContent = 0;
+    document.getElementById("referrals").textContent = 0;
+  }
+}
+
+
+
 const stakeNFTs = [];
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -13,6 +71,9 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("username").innerText =
       "Username: @" + (user.username || "unknown");
   }
+
+  const username = tg.initDataUnsafe?.user?.username || "guest";
+loadUserData(username);
 
   // Navigation footer buttons
   document.querySelectorAll(".footer button[data-tab]").forEach((button) => {
@@ -33,21 +94,59 @@ document.addEventListener("DOMContentLoaded", function () {
   // Button listeners
   document.getElementById("stakeNFTBtn")?.addEventListener("click", stakeNFT);
 
-  // ✅ Initialize TonConnectUI
-  const tonConnectUI = new TonConnectUI({
-    manifestUrl: 'https://omariniesta.github.io/Omar/tasks.json',
-    buttonRootId: 'ton-connect-btn'
+    // ✅ TonConnect SDK integration
+  const connector = new TonConnect({
+    manifestUrl: 'https://raw.githubusercontent.com/Omariniesta/dapp/main/tonconnect-manifest.json'
   });
 
-  // ✅ Listen for connection and show address
-  tonConnectUI.onStatusChange(walletInfo => {
+  window.connector = connector;
+
+  setupTonWallet();
+  async function setupTonWallet() {
+  await connector.restoreConnection();
+
+  const walletAddressEl = document.getElementById("walletAddress");
+  const walletBtn = document.getElementById("connectWalletBtn");
+
+  connector.onStatusChange(async (walletInfo) => {
     if (walletInfo && walletInfo.account?.address) {
-      const address = walletInfo.account.address;
-      document.getElementById("walletAddress").innerText = address;
+      walletAddressEl.textContent = walletInfo.account.address;
+      walletBtn.textContent = "Disconnect Wallet";
+
+      // ✅ Save wallet address to Firestore under the current user
+      const user = window.Telegram.WebApp.initDataUnsafe?.user;
+      if (user?.username) {
+        const userRef = doc(db, "users", user.username);
+        await updateDoc(userRef, {
+          walletAddress: walletInfo.account.address,
+        });
+      }
     } else {
-      document.getElementById("walletAddress").innerText = "Not connected";
+      walletAddressEl.textContent = "Not connected";
+      walletBtn.textContent = "Connect Wallet";
     }
   });
+
+  walletBtn.addEventListener("click", async () => {
+    if (!connector.connected) {
+      const wallets = await connector.getWallets();
+      if (wallets.length > 0) {
+        connector.connect({
+          universalLink: wallets[0].universalLink,
+          bridgeUrl: wallets[0].bridgeUrl,
+        });
+      } else {
+        alert("No TON wallets found.");
+      }
+    } else {
+      connector.disconnect();
+    }
+  });
+}
+
+
+
+
 });
 
 // Tab switching
@@ -87,3 +186,26 @@ async function stakeNFT() {
 
   alert(`NFT ${nftId} staked successfully!`);
 }
+
+export async function completeTask(username, taskId, points) {
+  const userRef = doc(db, "users", username);
+  const userSnap = await getDoc(userRef);
+
+  if (userSnap.exists()) {
+    const userData = userSnap.data();
+    const alreadyCompleted = userData.completedTasks?.includes(taskId);
+
+    if (!alreadyCompleted) {
+      const updatedPoints = (userData.points || 0) + points;
+      const updatedTasks = [...(userData.completedTasks || []), taskId];
+
+      await updateDoc(userRef, {
+        points: updatedPoints,
+        completedTasks: updatedTasks,
+      });
+
+      document.getElementById("points").textContent = updatedPoints;
+    }
+  }
+}
+
