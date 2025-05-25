@@ -1,0 +1,45 @@
+{
+  "wallets": [
+    {
+      "name": "Tonkeeper",
+      "image": "https://tonkeeper.com/assets/tonkeeper-icon.png",
+      "about_url": "https://tonkeeper.com/",
+      "universal_url": "https://app.tonkeeper.com/ton-connect",
+      "bridge_url": "https://bridge.tonapi.io/bridge",
+      "platforms": ["ios", "android", "web"]
+    },
+    {
+      "name": "OpenMask",
+      "image": "https://raw.githubusercontent.com/OpenProduct/openmask-web/master/public/icon.png",
+      "about_url": "https://t.me/openmask_wallet",
+      "universal_url": "https://app.openmask.app/ton-connect",
+      "bridge_url": "https://bridge.openmask.app/bridge",
+      "platforms": ["chrome"]
+    },
+    {
+      "name": "MyTonWallet",
+      "image": "https://wallet.mytonwallet.org/assets/images/logo.png",
+      "about_url": "https://mytonwallet.org/",
+      "universal_url": "https://app.mytonwallet.org/ton-connect",
+      "bridge_url": "https://connect.mytonwallet.org/bridge",
+      "platforms": ["web", "chrome"]
+    },
+    {
+      "name": "Tonhub",
+      "image": "https://tonhub.com/assets/logo-icon.png",
+      "about_url": "https://tonhub.com/",
+      "universal_url": "https://app.tonhub.com/ton-connect",
+      "bridge_url": "https://bridge.tonhub.com/bridge",
+      "platforms": ["ios", "android"]
+    },
+    {
+      "name": "TonWallet",
+      "image": "https://tonwallet.me/icon.png",
+      "about_url": "https://tonwallet.me/",
+      "universal_url": "https://app.tonwallet.me/ton-connect",
+      "bridge_url": "https://bridge.tonwallet.me/bridge",
+      "platforms": ["android"]
+    }
+  ]
+}
+
