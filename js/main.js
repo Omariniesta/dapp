@@ -96,7 +96,11 @@ loadUserData(username);
 
     // ✅ TonConnect SDK integration
   const connector = new TonConnect({
-    manifestUrl: 'https://raw.githubusercontent.com/Omariniesta/dapp/main/tonconnect-manifest.json'
+    manifestUrl: 'https://raw.githubusercontent.com/Omariniesta/dapp/main/tonconnect-manifest.json',
+    walletsList: {
+      type: 'remote',
+      url: 'https://raw.githubusercontent.com/Omariniesta/dapp/main/wallets-v2.json'
+    }
   });
 
   window.connector = connector;
